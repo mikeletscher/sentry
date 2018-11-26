@@ -54,14 +54,17 @@ describe('Query Builder', function() {
       expect(queryBuilder.getColumns()).toContainEqual({
         name: 'tag1',
         type: 'string',
+        isTag: true,
       });
       expect(queryBuilder.getColumns()).toContainEqual({
         name: 'tag2',
         type: 'string',
+        isTag: true,
       });
       expect(queryBuilder.getColumns()).not.toContainEqual({
         name: 'environment',
         type: 'string',
+        isTag: true,
       });
     });
 
@@ -81,10 +84,12 @@ describe('Query Builder', function() {
       expect(queryBuilder.getColumns()).toContainEqual({
         name: 'environment',
         type: 'string',
+        isTag: true,
       });
       expect(queryBuilder.getColumns()).not.toContainEqual({
         name: 'tag1',
         type: 'string',
+        isTag: true,
       });
     });
   });
@@ -163,6 +168,31 @@ describe('Query Builder', function() {
       expect(queryBuilder.getInternal().orderby).toBe('-count');
       queryBuilder.updateField('aggregations', []);
       expect(queryBuilder.getInternal().orderby).toBe('-timestamp');
+    });
+  });
+
+  describe('getColumns()', function() {
+    let queryBuilder;
+    beforeEach(async function() {
+      queryBuilder = createQueryBuilder(
+        {},
+        TestStubs.Organization({projects: [TestStubs.Project()]})
+      );
+      await queryBuilder.load();
+    });
+
+    it('returns columns and tags', function() {
+      expect(queryBuilder.getColumns()).toContainEqual({
+        name: 'id',
+        type: 'string',
+        isTag: false,
+      });
+
+      expect(queryBuilder.getColumns()).toContainEqual({
+        name: 'logger',
+        type: 'string',
+        isTag: true,
+      });
     });
   });
 });
