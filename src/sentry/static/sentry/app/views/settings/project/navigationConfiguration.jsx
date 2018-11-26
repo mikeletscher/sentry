@@ -19,31 +19,37 @@ export default function getConfiguration({project}) {
           path: `${pathPrefix}/teams/`,
           title: t('Project Teams'),
           description: t('Manage team access for a project'),
+          show: ({access}) => access.has('project:write'),
         },
         {
           path: `${pathPrefix}/alerts/`,
           title: t('Alerts'),
           description: t('Manage alerts and alert rules for a project'),
+          show: ({access}) => access.has('project:write'),
         },
         {
           path: `${pathPrefix}/tags/`,
           title: t('Tags'),
           description: t("View and manage a  project's tags"),
+          show: ({access}) => access.has('project:write'),
         },
         {
           path: `${pathPrefix}/environments/`,
           title: t('Environments'),
           description: t('Manage environments in a project'),
+          show: ({access}) => access.has('project:write'),
         },
         {
           path: `${pathPrefix}/ownership/`,
           title: t('Issue Owners'),
           description: t('Manage issue ownership rules for a project'),
           badge: () => 'new',
+          show: ({access}) => access.has('project:write'),
         },
         {
           path: `${pathPrefix}/data-forwarding/`,
           title: t('Data Forwarding'),
+          show: ({access}) => access.has('project:write'),
         },
         {
           path: `${pathPrefix}/saved-searches/`,
@@ -53,6 +59,7 @@ export default function getConfiguration({project}) {
         {
           path: `${pathPrefix}/debug-symbols/`,
           title: t('Debug Files'),
+          show: ({access}) => access.has('project:write'),
         },
         {
           path: `${pathPrefix}/processing-issues/`,
@@ -62,6 +69,7 @@ export default function getConfiguration({project}) {
             if (project.processingIssues <= 0) return null;
             return project.processingIssues > 99 ? '99+' : project.processingIssues;
           },
+          show: ({access}) => access.has('project:write'),
         },
         {
           path: `${pathPrefix}/filters/`,
@@ -69,6 +77,7 @@ export default function getConfiguration({project}) {
           description: t(
             "Configure a project's inbound filters (e.g. browsers, messages)"
           ),
+          show: ({access}) => access.has('project:write'),
         },
       ],
     },
@@ -83,6 +92,7 @@ export default function getConfiguration({project}) {
           path: `${pathPrefix}/keys/`,
           title: t('Client Keys (DSN)'),
           description: t("View and manage the project's client keys (DSN)"),
+          show: ({access}) => access.has('project:write'),
         },
         {
           path: `${pathPrefix}/release-tracking/`,
@@ -91,11 +101,13 @@ export default function getConfiguration({project}) {
         {
           path: `${pathPrefix}/security-headers/`,
           title: t('Security Headers'),
+          show: ({access}) => access.has('project:write'),
         },
         {
           path: `${pathPrefix}/user-feedback/`,
           title: t('User Feedback'),
           description: t('Configure user feedback reporting feature'),
+          show: ({access}) => access.has('project:write'),
         },
       ],
     },
@@ -106,10 +118,12 @@ export default function getConfiguration({project}) {
           path: `${pathPrefix}/plugins/`,
           title: t('Legacy Integrations'),
           description: t('View, enable, and disable all integrations for a project'),
+          show: ({access}) => access.has('project:write'),
         },
         ...plugins.map(plugin => ({
           path: `${pathPrefix}/plugins/${plugin.id}/`,
           title: plugin.name,
+          show: ({access}) => access.has('project:write'),
         })),
       ],
     },
