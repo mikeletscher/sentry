@@ -21,9 +21,9 @@ class GroupResolution(Model):
         resolved = 1
 
     group = FlexibleForeignKey('sentry.Group', unique=True)
-    # the release in which its suggested this was resolved
+    # the release which is suggested to resolve the issue
     # which allows us to indicate if it still happens in newer versions
-    release = FlexibleForeignKey('sentry.Release')
+    release = FlexibleForeignKey('sentry.Release', null=True)
     type = BoundedPositiveIntegerField(
         choices=((Type.in_next_release, 'in_next_release'), (Type.in_release, 'in_release'), ),
         null=True
